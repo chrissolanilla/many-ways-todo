@@ -1,0 +1,8 @@
+nav {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+}

@@ -1,0 +1,26 @@
+<body>
+    <main>
+        <app-navbar />
+        <div class="main">
+            <div>
+                <input
+                    type="text"
+                    placeholder="Add todo"
+                    [value]="newItem()"
+                    (input)="newItem.set($any($event.target).value)"
+                />
+                <button (click)="addItem()">Add Todo</button>
+            </div>
+
+            <div >
+                @for (item of items(); track item.id ) {
+                    <app-item
+                        [todo]="item"
+                        (toggle)="toggleItem(item.id)"
+                        (deleteTodo)="deleteItem(item.id)"
+                    />
+                }
+            </div>
+        </div>
+    </main>
+</body>

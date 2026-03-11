@@ -1,0 +1,13 @@
+<main class="todo-item">
+    <span class="text" [class.done]="todo().done">
+        {{ todo().text }}
+    </span>
+
+    <div class="actions">
+        <button (click)="onToggle()">
+            {{ todo().done ? 'Undo' : 'Done' }}
+        </button>
+
+        <button (click)="onDelete()">Delete</button>
+    </div>
+</main>
