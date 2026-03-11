@@ -12,7 +12,10 @@ function App() {
 
 	//similar to useMemo, recomputes only when its dependencies change
 	const visibleTodos = createMemo(() => {
-		if (showDone()) return todos();
+		if (showDone() ){
+			return todos();
+		}
+
 		return todos().filter((todo) => !todo.done);
 	});
 
@@ -21,7 +24,10 @@ function App() {
 		if (!text) return;
 
 		setTodos([
-			{ id: Date.now(), text, done: false },
+			{
+				id: Date.now(),
+				text, done: false
+			},
 			...todos()
 		]);
 
@@ -31,7 +37,10 @@ function App() {
 	function toggleTodo(id) {
 		setTodos(
 			todos().map((todo) =>
-				todo.id === id ? { ...todo, done: !todo.done } : todo
+				todo.id === id ? {
+					...todo,
+					done: !todo.done
+				} : todo
 			)
 		);
 	}
