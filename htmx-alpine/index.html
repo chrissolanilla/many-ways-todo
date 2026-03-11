@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>HTMX + Alpine Todo</title>
+    </head>
+
+    <body>
+        <!-- we can use alpine to basically have vue like variables live within html nested elements -->
+        <div x-data="{ showInfo: true }" class="card">
+            <h1>HTMX + Alpine Todo App</h1>
+            <!-- this could have been with a details but mainly for showing off the alpine -->
+            <p> The ultimate stack web stack for larping about how everything other than html is bad</p>
+            <p x-show="showInfo">
+                HTMX handles server requests and server side UI. Alpine handles tiny UI state like this info
+                toggle.
+            </p>
+
+            <button @click="showInfo = !showInfo">
+                Toggle explanation
+            </button>
+        </div>
+
+        <div class="card">
+            <h2>Add Todo</h2>
+
+            <!-- HTMX konws where to insert html because of our hx-target -->
+            <form hx-post="/todos" hx-target="#todo-list" hx-swap="innerHTML">
+                <input type="text" name="title" placeholder="Enter todo title" required />
+                <button type="submit">Add</button>
+            </form>
+        </div>
+
+        <div class="card" x-data="{ open: true }">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2>Todos</h2>
+                <button @click="open = !open">
+                    <span x-text="open ? 'Hide' : 'Show'"></span>
+                </button>
+            </div>
+
+            <div x-show="open">
+                <!-- HTMX automatically swaps out the html within todo-list when with get -->
+                <div id="todo-list" hx-get="/todos" hx-trigger="load">
+                    Loading todos...
+                </div>
+            </div>
+        </div>
+
+        <script type="module" src="/main.js"></script>
+    </body>
+
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #0f172a;
+        color: white;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .card {
+        background: #1e293b;
+        padding: 1rem;
+        border-radius: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    input,
+    button {
+        padding: 0.7rem;
+        border-radius: 0.6rem;
+        border: none;
+    }
+
+    input {
+        width: 60%;
+        margin-right: 0.5rem;
+    }
+
+    button {
+        cursor: pointer;
+    }
+
+    .todo-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .todo-row:last-child {
+        border-bottom: none;
+    }
+
+    .done {
+        text-decoration: line-through;
+        opacity: 0.6;
+    }
+    </style>
+
+</html>
